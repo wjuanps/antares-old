@@ -1,0 +1,18 @@
+<div class="container-fluid bg-jumbo" ng-init="init()">
+    <br />
+    <span class="h2 text-muted">O que as pessoas estão dizendo sobre</span> <br /> 
+    <span class="h2 text-muted">empresas, produtos ou serviços.</span>
+
+    <br /><br /><br /><br />
+    <div ng-include="'web/view/includes/pesquisar.html'"></div>
+
+    <br /><br />
+    <h3 class="text-info"><i class="icon ion-ribbon-a"></i> Mais pesquisados</h3>
+    <div class="list-group col-sm-7">
+        <a class="list-group-item list-group-item-action justify-content-between" ng-repeat="pesquisa in pesquisas" 
+                href="/antares/{{::pesquisa.url}}" style="border: none;">
+            <span ng-bind="::pesquisa.nome"></span>
+            <span ng-bind="::pesquisa.total" class="badge badge-default badge-pill badge-info bg-antares"></span>
+        </a>
+    </div>
+</div>

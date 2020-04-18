@@ -1,0 +1,112 @@
+<h1>Faça seu login</h1>
+<hr class="hr" />
+<br /><br />
+<div ng-controller="loginCtrl">
+	<form name="formLogin">
+		<div class="row" ng-if="erroAoAcessarSistema">
+			<div class="col-sm-6 mx-auto">
+				<div class="alert alert-danger">
+					<strong>Erro ao acessar o sistema!!</strong> <span>email ou senha inválido</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="row" ng-if="formLogin.email.$error.pattern">
+			<div class="col-sm-6 mx-auto">
+				<div class="alert alert-danger"><strong>formato do email inválido</strong></div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-sm-6 mx-auto">
+				<div class="form-group input-group">
+					<span class="input-group-addon bg-antares" id="usuario"><i class="icon ion-ios-person"></i></span>
+			    	<input type="text" class="form-control" id="email" placeholder="Email" 
+			            name="email" ng-required="true" ng-pattern="/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/" 
+			            ng-model="usuario.email" aria-describedby="usuario" />
+			    </div>
+			    <div class="form-group input-group">
+			    	<span class="input-group-addon bg-antares" id="password"><i class="icon ion-android-unlock"></i></span>
+			       	<input type="password" class="form-control" id="senha" placeholder="Senha" 
+			            name="senha" ng-required="true" ng-model="usuario.senha" aria-describedby="password" />
+			    </div>
+			    <div class="form-group">
+			    	<button type="submit" class="btn btn-info btn-block bg-antares" 
+	    				ng-click="logarNoSistema(usuario, formLogin.$valid)">
+	    				<span>Acessar Sistema</span>  <i class="icon ion-log-in"></i>
+    				</button>
+			    </div>
+		    </div>
+	    </div>
+
+	    <div class="row">
+	    	<div class="col-sm-6 mx-auto">
+	    		<div class="row">
+	    			<div class="col-sm-6"><a href="">Esqueceu sua senha?</a></div>
+		    		<div class="col-sm-6">
+		    			<a href="" data-toggle="modal" data-target="#dialogCadastro" data-whatever="@mdo">
+		    				Criar uma conta no Antares?
+	    				</a>
+	    			</div>
+	    		</div>
+	    	</div>
+	    </div>
+	</form>
+</div>
+
+<div ng-controller="cadastroUsuarioCtrl">
+	<div class="modal fade" id="dialogCadastro" tabindex="-1" role="dialog" aria-labelledby="modalCadastro" aria-hidden="true">
+	  	<div class="modal-dialog" role="document">
+	    	<div class="modal-content">
+	    		<form name="formCadastro">
+			      	<div class="modal-header">
+			        	<h5 class="modal-title" id="modalCadastro">Criar uma conta no Antares</h5>
+			        	<button type="button" class="close" data-dismiss="modal" ng-click="limparCampos()" aria-label="Close">
+			          		<span aria-hidden="true">&times;</span>
+			        	</button>
+		      		</div>
+			      	<div class="modal-body">
+			      		<div class="row" ng-if="formCadastro.$invalid && error">
+							<div class="col-sm-12">
+								<div class="alert alert-danger">
+									<div class="row" ng-if="formCadastro.nome.$invalid"><strong>Nome inválido</strong></div>
+									<div class="row" ng-if="formCadastro.email.$invalid"><strong>Email inválido</strong></div>
+									<div class="row" ng-if="formCadastro.senha.$invalid"><strong>Senha inválida</strong></div>
+								</div>
+							</div>
+						</div>
+
+						<div class="row" ng-if="formCadastro.$valid && !error && mensagem && mensagem != 'sucesso'">
+							<div class="col-sm-12" ng-if="mensagem">
+								<div class="alert alert-danger"><strong ng-bind="mensagem"></strong></div>
+							</div>
+						</div>
+
+			          	<div class="form-group">
+			          		<label for="nome" class="form-control-label">Nome</label>
+			            	<input type="text" class="form-control" id="nome" name="nome" placeholder="Informe o seu nome aqui" 
+			            				ng-model="usuario.nome" ng-required="true" />
+			          	</div>
+			          	<div class="form-group">
+			            	<label for="email" class="form-control-label">Email</label>
+			            	<input type="text" class="form-control" id="email" name="email" placeholder="Informe o seu email aqui" 
+			            				ng-model="usuario.email" ng-pattern="/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/" 
+			            				ng-required="true" />
+			          	</div>
+			          	<div class="form-group">
+			            	<label for="senha" class="form-control-label">Senha</label>
+			            	<input type="password" class="form-control" id="senha" name="senha" 
+			            				placeholder="Informe a sua senha aqui" ng-model="usuario.senha" ng-required="true" />
+		          		</div>
+		      		</div>
+		      		<div class="modal-footer">
+		        		<button type="button" class="btn btn-danger" ng-click="limparCampos()" data-dismiss="modal">Cancelar</button>
+		        		<button type="button" class="btn btn-success" ng-click="cadastrarUsuario(formCadastro.$invalid, usuario)">
+		        			Confirmar
+	        			</button>
+		      		</div>
+	      		</form>
+	    	</div>
+	  	</div>
+	</div>
+</div>

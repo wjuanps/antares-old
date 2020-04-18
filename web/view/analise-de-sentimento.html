@@ -1,0 +1,84 @@
+<div ng-controller="analiseSentimentoCtrl">
+    <div ng-include="'web/view/includes/pesquisar.html'"></div>
+
+    <br />
+    <h4>Análise de sentimentos para <span ng-bind="::search"></span></h4><br />
+    <div class="d-flex justify-content-center">
+        <img src="web/imagens/loader.gif" ng-if="loading" alt="Analisando sentimento..." />
+    </div>
+
+    <h3 ng-if="sentimento.vazio" class="text-primary">
+        <span ng-bind="::sentimento.vazio"></span>  <i ng-class="{'icon ion-sad-outline': sentimento.vazio}"></i>
+    </h3>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <canvas id="chartBar"></canvas>
+        </div>
+        <div class="col-sm-6">
+            <canvas id="chartPie"></canvas>
+        </div>
+    </div>
+
+    <br /><br />
+    <div ng-if="!loading && sentimento.mensagens.length > 0">
+        <div class="col-sm-6">
+            <table class="table table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th style="border-top: none;" colspan="2">
+                            <h3 class="text-info"><i class="icon ion-stats-bars"></i> Resumo da análise</h3>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Sentimento predominante</td>
+                        <td ng-bind="::sentimento.sentimento"></td>
+                    </tr>
+                    <tr>
+                        <td>Pontuação sentimento</td>
+                        <td ng-bind="::sentimento.pontuacao"></td>
+                    </tr>
+                    <tr>
+                        <td>Pontuação Positivas</td>
+                        <td ng-bind="::sentimento.totalPontuacaoPositivas"></td>
+                    </tr>
+                    <tr>
+                        <td>Pontuação Negativas</td>
+                        <td ng-bind="::sentimento.totalPontuacaoNegativas"></td>
+                    </tr>
+                    <tr>
+                        <td>Porcentagem Positivas</td>
+                        <td><span ng-bind="::sentimento.porcentagemPositivo"></span>%</td>
+                    </tr>
+                    <tr>
+                        <td>Porcentagem Negativas</td>
+                        <td><span ng-bind="::sentimento.porcentagemNegativo"></span>%</td>
+                    </tr>
+                    <tr>
+                        <td>Total de Tweets análisados</td>
+                        <td ng-bind="::sentimento.totalDeTweets"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <br /><br />
+        <table class="table table-hover table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th style="border-top: none;" colspan="2">
+                        <h3 class="text-info"><i class="icon ion-social-twitter-outline"></i>  Alguns tweets analisados</h3>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="mensagem in sentimento.mensagens">
+                    <td ng-bind="::mensagem.mensagem"></td>
+                    <td ng-bind="::mensagem.sentimento"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
